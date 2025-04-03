@@ -15,7 +15,7 @@ load_dotenv()
 
 
 # Replace with your actual API key
-client = genai.Client(api_key=f"{os.getenv('GOOGLE_API_KEY')}")
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 model_id = "gemini-2.0-flash"
 
 google_search_tool = Tool(google_search=GoogleSearch())
