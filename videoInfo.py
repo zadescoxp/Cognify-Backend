@@ -90,52 +90,52 @@ def get_details(url):
             article_match = re.search(r"<article>(.*?)</article>", text, re.DOTALL)
             article = article_match.group(1).strip() if article_match else ""
 
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=f"""{transcript}
+            # response = client.models.generate_content(
+            #     model="gemini-2.0-flash",
+            #     contents=f"""{transcript}
 
-            This is the content we got from the youtube video.
+            # This is the content we got from the youtube video.
 
-            Now you need to generate content for a flowchat so generate contnet one by one and just few words explaing how the user should go ahead in learning all this.
+            # Now you need to generate content for a flowchat so generate contnet one by one and just few words explaing how the user should go ahead in learning all this.
 
-            A straight forward process to approach everything that is available in the content.
+            # A straight forward process to approach everything that is available in the content.
 
-            The structure should be
-            `
-            <flowchart>
-            first thing
-            second thing
-            third thing
-            </flowchart>
-            `
+            # The structure should be
+            # `
+            # <flowchart>
+            # first thing
+            # second thing
+            # third thing
+            # </flowchart>
+            # `
 
-            and so on remember no numbering and no other text
-            """,
-            )
+            # and so on remember no numbering and no other text
+            # """,
+            # )
 
-            text = response.text
-            # Extract flowchart
-            flowchart_match = re.search(
-                r"<flowchart>(.*?)</flowchart>", text, re.DOTALL
-            )
-            flowchart = flowchart_match.group(1).strip() if flowchart_match else ""
+            # text = response.text
+            # # Extract flowchart
+            # flowchart_match = re.search(
+            #     r"<flowchart>(.*?)</flowchart>", text, re.DOTALL
+            # )
+            # flowchart = flowchart_match.group(1).strip() if flowchart_match else ""
 
-            response = client.models.generate_content(
-                model=model_id,
-                contents=f"""Can you fetch me scientific reasearch papers, articles, blogs and youtube videos on {title}. Just provide links with a label of it's type I mean if it is a paper, article, blog or youtube videos
-                The format should be <content>[content goes here]</content> and nothing else keep the content in markdown.""",
-                config=GenerateContentConfig(
-                    tools=[google_search_tool],
-                    response_modalities=["TEXT"],
-                ),
-            )
+            # response = client.models.generate_content(
+            #     model=model_id,
+            #     contents=f"""Can you fetch me scientific reasearch papers, articles, blogs and youtube videos on {title}. Just provide links with a label of it's type I mean if it is a paper, article, blog or youtube videos
+            #     The format should be <content>[content goes here]</content> and nothing else keep the content in markdown.""",
+            #     config=GenerateContentConfig(
+            #         tools=[google_search_tool],
+            #         response_modalities=["TEXT"],
+            #     ),
+            # )
 
-            text = response.text
-            # Extract content
-            content_match = re.search(r"<content>(.*?)</content>", text, re.DOTALL)
-            content = content_match.group(1).strip() if content_match else ""
+            # text = response.text
+            # # Extract content
+            # content_match = re.search(r"<content>(.*?)</content>", text, re.DOTALL)
+            # content = content_match.group(1).strip() if content_match else ""
 
-            return title, summary, blog, article, flowchart, content
+            return title, summary, blog, article
         except Exception as e:
             print(f"Error parsing response: {str(e)}")
             return None, None, None
