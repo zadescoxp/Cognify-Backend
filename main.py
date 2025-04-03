@@ -58,19 +58,12 @@ def video():
             return jsonify({"error": "Missing video_url"}), 400
 
         result = videoInfo.get_details(video_url)
-        print(result[3])
-        print()
-        print()
-        print()
-        print(result[4])
         return jsonify(
             {
                 "title": result[0],
                 "summary": result[1],
                 "blog": result[2],
                 "article": result[3],
-                "flowchart": result[4],
-                "resources": result[5],
             }
         )
     except Exception as e:
